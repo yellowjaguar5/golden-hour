@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
 import argparse
+import datetime
+import os
 import random
 
 from goldenhour import sunset, timelapse, twitter
@@ -18,6 +20,21 @@ def get_random_status_text():
         'inconceivable',
         'reverse sunrise',
     ])
+
+
+def get_timelapse_filename(output_dir):
+    filename_template = '{output_dir}/timelapse_{date}_{count:03d}.mp4'
+    today_str = datetime.date.today().isoformat()
+    count = 0
+    while True:
+        filename = filename_template.format(
+            output_dir=output_dir,
+            date=today_str,
+            count=count,
+        )
+        if not os.path.exists(filename):
+            return filename
+        count += 1
 
 
 def main():
@@ -48,11 +65,10 @@ def main():
     )
     args = parser.parse_args()
 
-    print(args)
-
-    # TODO date-based filename
-    # TODO check if timelapse file already exists
-    timelapse_filename = 'timelapse.mp4'
+    output_dir = 'output'
+    if not os.path.exists(output_dir):
+        os.mkdir(output_dir)
+    timelapse_filename = get_timelapse_filename(output_dir)
 
     if args.post_to_twitter:
         # TODO pre-check twitter auth (will also ensure we have an internet connection)
@@ -61,10 +77,10 @@ def main():
         print('estimated video length: {} seconds'.format(video_duration))
         if video_duration < 5.0:
             print('Error: Timelapse video will be too short to upload to Twitter (min 5 seconds)')
-            exit()
+            exit(1)
         if video_duration > 30.0:
             print('Error: Timelapse video will be too long to upload to Twitter (max 30 seconds)')
-            exit()
+            exit(2)
 
     if args.start_before_sunset is not None:
         sunset.wait_for_sunset(args.start_before_sunset)
