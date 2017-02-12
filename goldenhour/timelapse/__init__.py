@@ -1,4 +1,4 @@
-from .osx import capture, compile
+from .pi import capture, compile
 
 def create_timelapse(duration, interval, filename):
     print('recording timelapse (duration: {}, interval: {}, filename: {})'.format(
