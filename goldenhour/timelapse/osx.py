@@ -10,6 +10,7 @@ def capture(output_dir, duration, interval):
     ))
     capture_rate = '1/{}'.format(interval)
     output_pattern = '{}/image%05d.png'.format(output_dir)
+    # TODO check exit status
     subprocess.call([
         'ffmpeg',
         '-t', str(duration),
@@ -29,6 +30,7 @@ def compile(photos_dir, output_filename, photos_per_second=30):
     ))
     # TODO ensure output_filename ends with .mp4
     photos_pattern = '{}/image%05d.png'.format(photos_dir)
+    # TODO check exit status
     subprocess.call([
         'ffmpeg',
         '-framerate', str(photos_per_second),

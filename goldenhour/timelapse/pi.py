@@ -9,12 +9,12 @@ def capture(output_dir, duration, interval):
         interval=interval,
     ))
     output_pattern = '{}/image%05d.png'.format(output_dir)
-    # raspistill -t 60000 -tl 2000 -n -w 1280 -h 720 --rotation 180 --quality 100 --verbose --saturation 50 -o images/image%04d.png -e png
+    # TODO check exit status
     subprocess.call([
         'raspistill',
         '-t', str(duration * 1000),
         '-tl', str(interval * 1000),
-        '-n',
+        '-n', # don't try to show a preview window
         '-w', '1280',
         '-h', '720',
         '--rotation', '180',
@@ -33,6 +33,7 @@ def compile(photos_dir, output_filename, photos_per_second=30):
     ))
     # TODO ensure output_filename ends with .mp4
     photos_pattern = '{}/image%05d.png'.format(photos_dir)
+    # TODO check exit status
     subprocess.call([
         'ffmpeg',
         '-framerate', str(photos_per_second),

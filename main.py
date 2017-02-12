@@ -1,12 +1,23 @@
 #!/usr/bin/env python
 
 import argparse
+import random
 
 from goldenhour import sunset, timelapse, twitter
 
 def calculate_timelapse_duration(duration, interval, photo_display_rate=30.0):
     # return number of seconds
     return float(duration) / interval / photo_display_rate
+
+
+def get_random_status_text():
+    return random.choice([
+        'wow.',
+        'holy moly',
+        'what a time to be alive',
+        'inconceivable',
+        'reverse sunrise',
+    ])
 
 
 def main():
@@ -61,7 +72,8 @@ def main():
     timelapse.create_timelapse(args.duration, args.interval, timelapse_filename)
 
     if args.post_to_twitter:
-        twitter.post_update('testing', media=timelapse_filename)
+        status_text = get_random_status_text()
+        twitter.post_update(status_text, media=timelapse_filename)
 
     print('done!')
 
