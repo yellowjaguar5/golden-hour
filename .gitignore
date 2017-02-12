@@ -1,6 +1,5 @@
 twitter_secrets.yaml
-photos
-timelapse.mp4
+output
 
 # Github's Python gitignore:
 
