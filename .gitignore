@@ -1,3 +1,9 @@
+twitter_secrets.yaml
+photos
+timelapse.mp4
+
+# Github's Python gitignore:
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
