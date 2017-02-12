@@ -51,7 +51,7 @@ def main():
     parser.add_argument('--interval', metavar='seconds', required=True, type=int, help='number of seconds between photo captures')
     parser.add_argument('--photos-per-second', type=int, default=30, help='number of photos displayed per second in video')
     args = parser.parse_args()
-    print args
+    print(args)
 
     # capture and compile timelapse
     if not os.path.exists('photos'):
