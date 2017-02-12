@@ -17,7 +17,7 @@ def main():
         default=7200, # 2 hours
         help='duration of timelapse capture',
     )
-    # TODO might want to enforce minimum to 2 to avoid pushing raspicam too hard
+    # TODO might want to enforce minimum of 3 if using raspi cam
     parser.add_argument('--interval',
         metavar='seconds',
         type=int,
