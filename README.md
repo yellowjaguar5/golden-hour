@@ -22,3 +22,8 @@ Currently expects a CSI-port camera (and camera must be enabled in raspi-config)
 - way of configuring which camera is used with osx/ffmpeg capture (always uses FaceTime camera currently)
 - handle failed commands in capture/compile functions
 - turn this into an installable python package with commands in setup.py's console_scripts
+- documentation
+    - prepping a new Raspberry Pi (ffmpeg, webcam enable, git installation, etc.)
+    - creating cron job
+    - authenticating twitter
+    - commands
