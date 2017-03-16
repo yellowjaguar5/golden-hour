@@ -47,7 +47,7 @@ def compile(photos_dir, output_filename, photos_per_second=30):
 
 def main():
     parser = argparse.ArgumentParser(description='Record a timelapse.')
-    parser.add_argument('--duration', metavar='minutes', required=True, type=int, help='total duration of timelapse capture in minutes')
+    parser.add_argument('--duration', metavar='seconds', required=True, type=int, help='total duration of timelapse capture in seconds')
     parser.add_argument('--interval', metavar='seconds', required=True, type=int, help='number of seconds between photo captures')
     parser.add_argument('--photos-per-second', type=int, default=30, help='number of photos displayed per second in video')
     args = parser.parse_args()
@@ -57,9 +57,10 @@ def main():
     if not os.path.exists('photos'):
         os.makedirs('photos')
     photos_dir = os.path.abspath('photos')
+    output_filename = 'timelapse.mp4'
     print('created {}'.format(photos_dir))
     capture(photos_dir, args.duration, args.interval)
-    compile(photos_dir, args.photos_per_second)
+    compile(photos_dir, output_filename, args.photos_per_second)
     # TODO clean up temp dir
 
 
