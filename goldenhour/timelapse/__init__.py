@@ -2,10 +2,11 @@ import platform
 import shutil
 import tempfile
 
+from .ffmpeg import compile_video
 if platform.system() == 'Darwin':
-    from .osx import capture, compile
+    from .osx import capture
 else:
-    from .pi import capture, compile
+    from .pi import capture
 
 
 def create_timelapse(duration, interval, filename, persistent_photos_dir=None):
@@ -18,7 +19,7 @@ def create_timelapse(duration, interval, filename, persistent_photos_dir=None):
         photos_dir = persistent_photos_dir
 
     capture(photos_dir, duration, interval)
-    compile(photos_dir, filename)
+    compile_video(photos_dir, filename)
 
     if persistent_photos_dir is None:
         shutil.rmtree(photos_dir)
