@@ -1,8 +1,11 @@
+import platform
 import shutil
 import tempfile
 
-# TODO some way of specifying platform
-from .pi import capture, compile
+if platform.system() == 'Darwin':
+    from .osx import capture, compile
+else:
+    from .pi import capture, compile
 
 
 def create_timelapse(duration, interval, filename, persistent_photos_dir=None):
