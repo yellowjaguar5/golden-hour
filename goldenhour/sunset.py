@@ -11,8 +11,12 @@ def get_timezone(city):
     return pytz.timezone(Astral()[city].timezone)
 
 
-def get_today_sunset_time(city, today):
-    print(today)
+def get_today_sunset_time(city, today=None):
+    if today is None:
+        local_timezone = get_timezone(city)
+        now = datetime.datetime.now(local_timezone)
+        today = now.date()
+
     return Astral()[city].sun(today)['sunset']
 
 

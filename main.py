@@ -5,7 +5,7 @@ import datetime
 import os
 import random
 
-from goldenhour import sunset, timelapse, twitter
+from goldenhour import sunset, timelapse, twitter, weather
 
 def calculate_timelapse_duration(duration, interval, photo_display_rate=30.0):
     # return number of seconds
@@ -63,6 +63,9 @@ def main():
         default=False,
         help='post video to twitter',
     )
+    parser.add_argument('--darksky-key',
+        help='API key for the Dark Sky API'
+    )
     args = parser.parse_args()
 
     output_dir = 'output'
@@ -87,8 +90,19 @@ def main():
 
     timelapse.create_timelapse(args.duration, args.interval, timelapse_filename)
 
-    if args.post_to_twitter:
+    if args.darksky_key:
+        darksky_key = args.darksky_key
+        SEATTLE = 47.602, -122.332
+        sunset_time = sunset.get_today_sunset_time(sunset.ASTRAL_CITY_NAME_SEATTLE)
+
+        forecast = weather.get_sunset_forecast(darksky_key, sunset_time, SEATTLE)
+        status_text = weather.get_status_text(forecast, sunset_time)
+    else:
         status_text = get_random_status_text()
+
+    print(status_text)
+
+    if args.post_to_twitter:
         twitter.post_update(status_text, media=timelapse_filename)
 
     print('done!')
