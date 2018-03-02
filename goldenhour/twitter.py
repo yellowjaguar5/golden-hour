@@ -17,6 +17,13 @@ def load_credentials():
     }
 
 
+def verify_credentials():
+    credentials = load_credentials()
+    api = twitter.Api(**credentials)
+
+    assert api.VerifyCredentials() is not None
+
+
 def post_update(text, media=None):
     print('posting to twitter (status_text: {}, media: {})'.format(text, media))
     credentials = load_credentials()

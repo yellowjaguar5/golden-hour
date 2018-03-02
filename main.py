@@ -74,7 +74,8 @@ def main():
     timelapse_filename = get_timelapse_filename(output_dir)
 
     if args.post_to_twitter:
-        # TODO pre-check twitter auth (will also ensure we have an internet connection)
+        print('verifying twitter credentials')
+        twitter.verify_credentials()
         # check the expected length of the video to make sure it's within twitter's rules
         video_duration = calculate_timelapse_duration(args.duration, args.interval)
         print('estimated video length: {} seconds'.format(video_duration))
