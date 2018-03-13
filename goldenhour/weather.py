@@ -1,9 +1,13 @@
+import datetime
 from random import choice
+
 from darksky import forecast as get_forecast
 
 
 def get_sunset_forecast(darksky_key, sunset_time, lat_long):
-    with get_forecast(darksky_key, *lat_long, time=sunset_time.isoformat()) as forecast:
+    # Get the forecast from *just before* sunset to avoid night-themed emoji
+    just_before_sunset_time = sunset_time - datetime.timedelta(minutes=10)
+    with get_forecast(darksky_key, *lat_long, time=just_before_sunset_time.isoformat()) as forecast:
         return forecast
 
 
