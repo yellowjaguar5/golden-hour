@@ -1,6 +1,6 @@
 # golden-hour
 
-Currently only works with python 3 due to a bug in python-twitter (https://github.com/bear/python-twitter/issues/438)
+A python script to generate a timelapse video. Designed specifically to record at sunset, and post to twitter with a weather report.
 
 ## Installing Dependencies
 
@@ -15,14 +15,3 @@ Currently expects a CSI-port camera (and camera must be enabled in raspi-config)
 ### OS X/macOS
 
 `brew install ffmpeg`
-
-## TODO
-
-- way of configuring which camera is used with osx/ffmpeg capture (always uses FaceTime camera currently)
-- handle failed commands in capture/compile functions
-- turn this into an installable python package with commands in setup.py's console_scripts
-- documentation
-    - prepping a new Raspberry Pi (ffmpeg, webcam enable, git installation, etc.)
-    - creating cron job
-    - authenticating twitter
-    - commands
