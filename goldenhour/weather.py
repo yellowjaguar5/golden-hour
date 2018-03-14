@@ -93,7 +93,7 @@ def wind(currently):
 def visibility(currently):
     vis = currently['visibility']
     if vis < 5:
-        return '{} miles of visibility'.format(vis)
+        return '🌁 {} miles of visibility'.format(vis)
 
 def nearest_storm(currently):
     nearest_storm_distance = currently.get('nearestStormDistance', 0)
