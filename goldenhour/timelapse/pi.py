@@ -21,7 +21,7 @@ def capture(output_dir, duration, interval):
         '-h', '720',
         #'--rotation', '180', # set this to correct for camera orientation
         '--quality', '100',
-        '--verbose',
+        # '--verbose',
         # '--saturation', '50',
         '-o', output_pattern,
         '-e', 'png',
