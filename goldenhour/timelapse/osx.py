@@ -15,6 +15,7 @@ def capture(output_dir, duration, interval):
     # TODO check exit status
     subprocess.call([
         'ffmpeg',
+        '-loglevel', 'warning',
         '-t', str(duration),
         '-f', 'avfoundation',
         '-pix_fmt', 'uyvy422',
