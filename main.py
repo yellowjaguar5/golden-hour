@@ -66,6 +66,11 @@ def main():
     parser.add_argument('--darksky-key',
         help='API key for the Dark Sky API'
     )
+    parser.add_argument('--skip-timelapse',
+        action='store_true',
+        default=False,
+        help='skip recording the timelapse (useful for debugging)',
+    )
     args = parser.parse_args()
 
     output_dir = 'output'
@@ -89,7 +94,8 @@ def main():
     if args.start_before_sunset is not None:
         sunset.wait_for_sunset(args.start_before_sunset)
 
-    timelapse.create_timelapse(args.duration, args.interval, timelapse_filename)
+    if not args.skip_timelapse:
+        timelapse.create_timelapse(args.duration, args.interval, timelapse_filename)
 
     if args.darksky_key:
         darksky_key = args.darksky_key
@@ -103,7 +109,7 @@ def main():
 
     print(status_text)
 
-    if args.post_to_twitter:
+    if args.post_to_twitter and not args.skip_timelapse:
         twitter.post_update(status_text, media=timelapse_filename)
 
     print('done!')
