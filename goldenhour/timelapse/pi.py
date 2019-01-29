@@ -15,6 +15,8 @@ def capture(output_dir, duration, interval):
         interval=interval,
     ))
     output_pattern = '{}/image%05d.png'.format(output_dir)
+    file_list = os.listdir(output_dir)
+    start_number_files = len(file_list)
     try:
         subprocess.check_call([
             'raspistill',
@@ -32,6 +34,11 @@ def capture(output_dir, duration, interval):
         ])
     except subprocess.CalledProcessError as error:
         logger.error('Error encountered while capturing using raspistill', exc_info=True)
+    file_list = os.listdir(output_dir)
+    end_number_files = len(file_list)
+    logger.info('Captured {count} photos'.format(
+        count=end_number_files - start_number_files,
+    ))
 
 
 def main():
