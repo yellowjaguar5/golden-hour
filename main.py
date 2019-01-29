@@ -2,10 +2,14 @@
 
 import argparse
 import datetime
+import logging
 import os
 import random
+import sys
 
 from goldenhour import sunset, timelapse, twitter, weather
+
+logger = logging.getLogger()
 
 def calculate_timelapse_duration(duration, interval, photo_display_rate=30.0):
     # return number of seconds
@@ -38,6 +42,15 @@ def get_timelapse_filename(output_dir):
 
 
 def main():
+
+    if sys.stdout.isatty():
+        handler = logging.StreamHandler(sys.stdout)
+        logger.setLevel(logging.DEBUG)
+    else:
+        handler = logging.handlers.SysLogHandler(address='/dev/log')
+        logger.setLevel(logging.INFO)
+    logger.addHandler(handler)
+
     parser = argparse.ArgumentParser()
     parser.add_argument('--duration',
         metavar='seconds',
@@ -79,16 +92,16 @@ def main():
     timelapse_filename = get_timelapse_filename(output_dir)
 
     if args.post_to_twitter:
-        print('verifying twitter credentials')
+        logger.info('verifying twitter credentials')
         twitter.verify_credentials()
         # check the expected length of the video to make sure it's within twitter's rules
         video_duration = calculate_timelapse_duration(args.duration, args.interval)
-        print('estimated video length: {} seconds'.format(video_duration))
+        logger.info('estimated video length: {} seconds'.format(video_duration))
         if video_duration < 5.0:
-            print('Error: Timelapse video will be too short to upload to Twitter (min 5 seconds)')
+            logger.error('Error: Timelapse video will be too short to upload to Twitter (min 5 seconds)')
             exit(1)
         if video_duration > 30.0:
-            print('Error: Timelapse video will be too long to upload to Twitter (max 30 seconds)')
+            logger.error('Error: Timelapse video will be too long to upload to Twitter (max 30 seconds)')
             exit(2)
 
     if args.start_before_sunset is not None:
@@ -107,12 +120,12 @@ def main():
     else:
         status_text = get_random_status_text()
 
-    print(status_text)
+    logger.info(status_text)
 
     if args.post_to_twitter and not args.skip_timelapse:
         twitter.post_update(status_text, media=timelapse_filename)
 
-    print('done!')
+    logger.info('done!')
 
 
 if __name__ == '__main__':

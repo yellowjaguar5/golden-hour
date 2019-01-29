@@ -1,10 +1,15 @@
 from __future__ import absolute_import
 
 import argparse
+import logging
 import twitter
 import yaml
 
 from twitter.twitter_utils import parse_media_file
+
+
+logger = logging.getLogger()
+
 
 def load_credentials():
     with open('twitter_secrets.yaml') as twitter_conf_file:
@@ -25,7 +30,7 @@ def verify_credentials():
 
 
 def post_update(text, media=None):
-    print('posting to twitter (status_text: {}, media: {})'.format(text, media))
+    logger.info('posting to twitter (status_text: {}, media: {})'.format(text, media))
     credentials = load_credentials()
     api = twitter.Api(**credentials)
 
