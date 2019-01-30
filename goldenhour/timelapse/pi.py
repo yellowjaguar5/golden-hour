@@ -15,8 +15,7 @@ def capture(output_dir, duration, interval):
         interval=interval,
     ))
     output_pattern = '{}/image%05d.png'.format(output_dir)
-    file_list = os.listdir(output_dir)
-    start_number_files = len(file_list)
+    start_number_files = len(os.listdir(output_dir))
     try:
         subprocess.check_call([
             'raspistill',
