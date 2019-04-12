@@ -1,3 +1,4 @@
+import logging
 import platform
 import shutil
 import tempfile
@@ -9,8 +10,11 @@ else:
     from .pi import capture
 
 
+logger = logging.getLogger()
+
+
 def create_timelapse(duration, interval, filename, persistent_photos_dir=None):
-    print('recording timelapse (duration: {}, interval: {}, filename: {})'.format(
+    logger.info('recording timelapse (duration: {}, interval: {}, filename: {})'.format(
         duration, interval, filename))
 
     if persistent_photos_dir is None:

@@ -1,8 +1,13 @@
 import datetime
+import logging
+import math
 import time
 
 from astral import Astral
 import pytz
+
+
+logger = logging.getLogger()
 
 
 ASTRAL_CITY_NAME_SEATTLE = 'seattle'
@@ -32,10 +37,19 @@ def wait_for_sunset(minutes_before=0):
     sunset_time = get_today_sunset_time(city, now.date())
     start_time = sunset_time - datetime.timedelta(minutes=minutes_before)
     if start_time < now:
-        print('ERROR: too late to start for today\'s sunset')
+        logger.error('ERROR: too late to start for today\'s sunset')
         exit()
 
     sleep_seconds = get_seconds_until(now, start_time)
-    # TODO print wait time in hours and seconds
-    print('waiting {} seconds to start {} minutes before sunset'.format(sleep_seconds, minutes_before))
+    hours = math.floor(sleep_seconds // (60 * 60))
+    minutes = math.floor((sleep_seconds // 60) % 60)
+    seconds = math.floor(sleep_seconds % 60)
+    logger.info(
+        'Waiting {hours} {minutes} {seconds} to start, {minutes_before} minutes before sunset'.format(
+            hours='{} hours'.format(hours) if hours > 0 else '',
+            minutes='{} minutes'.format(minutes) if minutes > 0 else '',
+            seconds='{} seconds'.format(seconds),
+            minutes_before=minutes_before,
+        )
+    )
     time.sleep(sleep_seconds)

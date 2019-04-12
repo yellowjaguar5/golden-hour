@@ -13,12 +13,16 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-from __future__ import print_function
 from six.moves import input
 
 from requests_oauthlib import OAuth1Session
+import logging
 import webbrowser
 import yaml
+
+
+logger = logging.getLogger()
+
 
 REQUEST_TOKEN_URL = 'https://api.twitter.com/oauth/request_token'
 ACCESS_TOKEN_URL = 'https://api.twitter.com/oauth/access_token'
@@ -29,7 +33,7 @@ SIGNIN_URL = 'https://api.twitter.com/oauth/authenticate'
 def get_access_token(consumer_key, consumer_secret):
     oauth_client = OAuth1Session(consumer_key, client_secret=consumer_secret, callback_uri='oob')
 
-    print('\nRequesting temp token from Twitter...\n')
+    logger.info('\nRequesting temp token from Twitter...\n')
 
     try:
         resp = oauth_client.fetch_request_token(REQUEST_TOKEN_URL)
@@ -38,7 +42,7 @@ def get_access_token(consumer_key, consumer_secret):
 
     url = oauth_client.authorization_url(AUTHORIZATION_URL)
 
-    print('I will try to start a browser to visit the following Twitter page '
+    logger.info('I will try to start a browser to visit the following Twitter page '
           'if a browser will not start, copy the URL to your browser '
           'and retrieve the pincode to be used '
           'in the next step to obtaining an Authentication Token: \n'
@@ -47,7 +51,7 @@ def get_access_token(consumer_key, consumer_secret):
     webbrowser.open(url)
     pincode = input('\nEnter your pincode? ')
 
-    print('\nGenerating and signing request for an access token...\n')
+    logger.info('\nGenerating and signing request for an access token...\n')
 
     oauth_client = OAuth1Session(consumer_key, client_secret=consumer_secret,
                                  resource_owner_key=resp.get('oauth_token'),
@@ -68,7 +72,7 @@ def get_access_token(consumer_key, consumer_secret):
     credentials_filename = 'twitter_secrets.yaml'
     with open(credentials_filename, 'w') as f:
         f.write(credentials_yaml)
-    print('Your tokens/keys have been written to {}'.format(credentials_filename))
+    logger.info('Your tokens/keys have been written to {}'.format(credentials_filename))
 
 
 def main():
