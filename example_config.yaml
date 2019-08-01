@@ -1,0 +1,17 @@
+## If your location is recognized by Astral, just provide the location name:
+## For a list of cities recognized, see: https://astral.readthedocs.io/en/latest/#cities
+location: Seattle
+## Alternatively, configure it like so: (use one or the other format but not both)
+#location:
+#  latitude: 48.769768
+#  longitude: -122.485886
+#  timezone: 'US/Pacific'
+#  elevation: 30
+## To get Twitter API credentials, set up your Twitter app at https://apps.twitter.com/
+#twitter:
+#  consumer_key: YOUR CONSUMER KEY HERE
+#  consumer_secret: YOUR CONSUMER SECRET HERE
+#  access_token_key: YOUR ACCESS TOKEN KEY HERE
+#  access_token_secret: YOUR ACCESS TOKEN SECRET HERE
+## To include the weather report (optional), set up a dark sky API key at https://darksky.net/dev
+#darksky_key: YOUR DARKSKY KEY HERE
