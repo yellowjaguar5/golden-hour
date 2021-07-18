@@ -22,12 +22,14 @@ setup(
     },
     install_requires=[
         "astral==1.3.4",
-        "darkskylib==0.3.6",
         "python-twitter==3.4.1",
         "pytz==2016.10",
         "PyYAML==3.12",
-        "schema",
+        "schema~=0.7.2",
         "six==1.10.0",
+        "requests~=2.24.0",
+        "adafruit-circuitpython-pm25~=1.0.3",
+        "adafruit-circuitpython-busdevice~=5.0.1"
     ],
     include_package_data=True,
 )

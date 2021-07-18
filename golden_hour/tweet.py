@@ -30,6 +30,7 @@ def post_update(credentials, text, media=None):
     TWITTER_CONFIG_SCHEMA.validate(credentials)
 
     logger.info('posting to twitter (status_text: {}, media: {})'.format(text, media))
+    print('posting to twitter (status_text: {}, media: {})'.format(text, media))
     api = twitter.Api(**credentials)
 
     media_id = None

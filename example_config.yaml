@@ -2,6 +2,7 @@
 ## For a list of cities recognized, see: https://astral.readthedocs.io/en/latest/#cities
 location: Seattle
 ## Alternatively, configure it like so: (use one or the other format but not both)
+# latitude and longitude is required for Climacell weather report
 #location:
 #  latitude: 48.769768
 #  longitude: -122.485886
@@ -13,5 +14,10 @@ location: Seattle
 #  consumer_secret: YOUR CONSUMER SECRET HERE
 #  access_token_key: YOUR ACCESS TOKEN KEY HERE
 #  access_token_secret: YOUR ACCESS TOKEN SECRET HERE
-## To include the weather report (optional), set up a dark sky API key at https://darksky.net/dev
+## To include the weather report (optional), use ONE of the following weather services:
+# set up a dark sky API key at https://darksky.net/dev
 #darksky_key: YOUR DARKSKY KEY HERE
+## OR set up a Climacell API key at https://developer.climacell.co/sign-up and add latitude and longitude above
+#climacell_key: YOUR CLIMACELL KEY HERE
+## To use a connected Adafruit 4632 (PMSA003I) Air Quality sensor, uncomment line below
+# use_air_quality_sensor: true

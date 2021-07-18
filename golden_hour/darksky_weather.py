@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
-import datetime
+from datetime import timedelta
 from random import choice
-
-from darksky import forecast as get_forecast
 
 
 def get_sunset_forecast(darksky_key, sunset_time, lat_long):
+    from darksky import forecast as get_forecast
     # Get the forecast from *just before* sunset to avoid night-themed emoji
-    just_before_sunset_time = sunset_time - datetime.timedelta(minutes=10)
+    just_before_sunset_time = sunset_time - timedelta(minutes=10)
     with get_forecast(darksky_key, *lat_long, time=just_before_sunset_time.isoformat()) as forecast:
         return forecast
 
@@ -43,6 +42,7 @@ def summary(hourly, currently):
         summ.lower()
     )
 
+
 def temp(currently, units):
     temperature = currently['temperature']
     apparent_temp = currently['apparentTemperature']
@@ -68,6 +68,7 @@ def cloudiness(currently):
             round(cloud_cover * 100)
         )
 
+
 def precip(currently):
     cloud_cover = currently['cloudCover']
 
@@ -75,11 +76,12 @@ def precip(currently):
     precip_type = currently.get('precipType')
 
     if precip_type and precip_prob > 0:
-        return  '{} {}% chance of {}'.format(
+        return '{} {}% chance of {}'.format(
             get_precip_emoji(precip_type, cloud_cover),
             round(precip_prob * 100),
             precip_type
         )
+
 
 def wind(currently):
     wind_speed = currently['windSpeed']
@@ -91,10 +93,12 @@ def wind(currently):
             get_bearing(wind_bearing)
         )
 
+
 def visibility(currently):
     vis = currently['visibility']
     if vis < 5:
         return '🌁 {} miles of visibility'.format(vis)
+
 
 def nearest_storm(currently):
     nearest_storm_distance = currently.get('nearestStormDistance', 0)
@@ -105,6 +109,7 @@ def nearest_storm(currently):
             nearest_storm_distance,
             get_bearing(nearest_storm_bearing)
         )
+
 
 def display_temp(temperature, units):
     degrees = '℉' if units == 'us' else '℃'
@@ -155,7 +160,7 @@ def get_cloud_cover_emoji(cloud_cover):
 
 def get_precip_emoji(precip_type, cloud_cover):
     if precip_type == 'rain':
-        if (cloud_cover < 0.5):
+        if cloud_cover < 0.5:
             return choice(['🌧', '☔️', '🌦'])
 
         return choice(['🌧', '☔️'])
@@ -168,7 +173,8 @@ def get_precip_emoji(precip_type, cloud_cover):
 
     return ''
 
-def get_bearing(degrees, short = False):
+
+def get_bearing(degrees, short=False):
     directions = (
         'N,NNE,NE,ENE,E,ESE,SE,SSE,S,SSW,SW,WSW,W,WNW,NW,NNW'
         if short
